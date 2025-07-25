@@ -19,31 +19,32 @@ class AVViewController: UIViewController {
         
         
         // Slide Button
-        self.navigationController?.navigationBar.hidden = true
+        self.navigationController?.navigationBar.isHidden = true
         let button = AnimatedMenuButton(frame: CGRect(x: 10, y: 30, width: 30, height: 30))
-        button.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(AVViewController.leftDrawerButtonPress(_:)))
+        button.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(AVViewController.leftDrawerButtonPress))
         button.addGestureRecognizer(tap)
         
         //if let resourceURL = NSBundle.mainBundle().pathForResource("video2", ofType: "MOV") {
-        if let resourceURL = NSBundle.mainBundle().pathForResource("preview", ofType: "mp4") {
-                
-            self.player = AVPlayer(URL: NSURL(fileURLWithPath: resourceURL))
+        if let resourceURL = Bundle.main.path(forResource: "preview", ofType: "mp4") {
+           
+////            self.player = AVPlayer(URL: URL(fileURLWithPath: resourceURL))
+            self.player = AVPlayer(url: URL(fileURLWithPath: resourceURL))
             let playerController = AVPlayerViewController()
             
             playerController.player = player
             playerController.showsPlaybackControls = false
-            playerController.videoGravity = AVLayerVideoGravityResizeAspectFill
+////            playerController.videoGravity = AVLayerVideoGravityResizeAspectFill
             self.addChildViewController(playerController)
             self.view.addSubview(playerController.view)
             playerController.view.frame = self.view.frame
             view.addSubview(button)
 
-            NSNotificationCenter.defaultCenter().addObserver(self,
-                                                             selector: #selector(AVViewController.playerItemDidReachEnd(_:)),
-                                                             name: AVPlayerItemDidPlayToEndTimeNotification,
+            NotificationCenter.default.addObserver(self,
+                                                             selector: #selector(AVViewController.playerItemDidReachEnd),
+                                                             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                              object: self.player.currentItem)
-            
+        
             player.play()
             
         } else {
@@ -51,13 +52,13 @@ class AVViewController: UIViewController {
         }
         
     }
-    func leftDrawerButtonPress(sender: AnyObject?) {
+    @objc func leftDrawerButtonPress(sender: AnyObject?) {
         print("selected")
-        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
+        self.evo_drawerController?.toggleDrawerSide(.left, animated: true, completion: nil)
     }
 
-    func playerItemDidReachEnd(notification: NSNotification) {
-        self.player.seekToTime(kCMTimeZero)
+    @objc func playerItemDidReachEnd(notification: NSNotification) {
+        self.player.seek(to: kCMTimeZero)
         self.player.play()
     }
 

@@ -1,0 +1,8 @@
+#!/usr/bin/php -f
+
+<?php
+   $im = imagecreatefrompng($argv[3]);
+   $crop_area = array('x'=>0,'y'=> 0,'width'=>$argv[1],'height'=>$argv[2]);
+   $result = imagecrop($im, $crop_area);
+   imagepng($result,$argv[4]);
+?>

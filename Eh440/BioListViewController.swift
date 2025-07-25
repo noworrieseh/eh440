@@ -30,16 +30,16 @@ class BioListViewController: ContentViewController, UITableViewDelegate, UITable
         //bio = BioViewController.getData("bio")
         bio = BioDetails.get()
         
-        self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
+        self.tableView = UITableView(frame: self.view.bounds, style: .plain)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
-        self.tableView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
-        self.tableView.separatorStyle = .None
+        self.tableView.autoresizingMask = [ .flexibleWidth, .flexibleHeight ]
+        self.tableView.separatorStyle = .none
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 88
         self.tableView.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
-        self.tableView.registerClass(CustomBioTableViewCell.self, forCellReuseIdentifier: "jsonCell2")
+        self.tableView.register(CustomBioTableViewCell.self, forCellReuseIdentifier: "jsonCell2")
         
         //self.view.backgroundColor = UIColor.whiteColor()
         self.view.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
@@ -63,12 +63,12 @@ class BioListViewController: ContentViewController, UITableViewDelegate, UITable
         self.tableView.reloadData()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bio.count - 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = CustomBioTableViewCell(style: .Subtitle, reuseIdentifier: "jsonCell2")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = CustomBioTableViewCell(style: .subtitle, reuseIdentifier: "jsonCell2")
         print("Index: \(indexPath.row)")
         let item = bio[indexPath.row + 1]
         cell.customView.name.text = item.name
@@ -80,20 +80,20 @@ class BioListViewController: ContentViewController, UITableViewDelegate, UITable
         let image = UIImage(named: "bio\(item.image)")
         cell.customView.image.image = image
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
@@ -107,7 +107,7 @@ class CustomBioTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         customView.translatesAutoresizingMaskIntoConstraints = false
-        customView.layer.borderColor = UIColor.blackColor().CGColor
+        customView.layer.borderColor = UIColor.black.cgColor
         customView.layer.borderWidth = 1.0
         
         //  contentView.backgroundColor = UIColor.lightGrayColor()
@@ -117,8 +117,8 @@ class CustomBioTableViewCell: UITableViewCell {
             "inner" : customView
         ]
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[inner]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-2-[inner]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[inner]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[inner]-|", options: [], metrics: nil, views: viewsDict))
         
     }
     
@@ -145,10 +145,10 @@ class CustomBioView: UIView {
         
         let shadowPath = UIBezierPath(rect: bounds)
         layer.masksToBounds = false
-        layer.shadowColor = UIColor.blackColor().CGColor
-        layer.shadowOffset = CGSizeMake(0.0, 5.0)
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 5)
         layer.shadowOpacity = 0.5
-        layer.shadowPath = shadowPath.CGPath
+        layer.shadowPath = shadowPath.cgPath
     }
     
     override init (frame : CGRect) {
@@ -160,40 +160,40 @@ class CustomBioView: UIView {
         hometown.translatesAutoresizingMaskIntoConstraints = false
         details.translatesAutoresizingMaskIntoConstraints = false
         
-        name.font = UIFont.boldSystemFontOfSize(20)
+        name.font = UIFont.boldSystemFont(ofSize: 20)
         details.font = role.font
-        details.scrollEnabled = false
-        details.editable = false
+        details.isScrollEnabled = false
+        details.isEditable = false
         let title = UIStackView(arrangedSubviews: [name, role])
-        title.axis = .Horizontal
-        title.distribution = .Fill
-        title.alignment = .Fill
+        title.axis = .horizontal
+        title.distribution = .fill
+        title.alignment = .fill
         title.spacing = 2
         title.translatesAutoresizingMaskIntoConstraints = false
         
         let info = UIStackView(arrangedSubviews: [title, hometown])
-        info.axis = .Vertical
-        info.distribution = .Fill
-        info.alignment = .Fill
+        info.axis = .vertical
+        info.distribution = .fill
+        info.alignment = .fill
         info.spacing = 2
         info.translatesAutoresizingMaskIntoConstraints = false
 
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         
         self.addSubview(image)
         self.addSubview(info)
         self.addSubview(details)
         
-        let viewsDict = [
+        let viewsDict : [String:Any] = [
             "info" : info,
             "image" : image,
             "details": details
             ]
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-4-[image(50)]-4-[info]-4-|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-4-[details]-4-|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-4-[image(50)]-4-[details(>=100)]-4-|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-4-[info]-4-[details(>=100)]-4-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-4-[image(50)]-4-[info]-4-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-4-[details]-4-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-4-[image(50)]-4-[details(>=100)]-4-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-4-[info]-4-[details(>=100)]-4-|", options: [], metrics: nil, views: viewsDict))
         
     }
     

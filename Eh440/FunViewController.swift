@@ -17,10 +17,10 @@ class FunViewController: ContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let audioPath = NSBundle.mainBundle().pathForResource("beat", ofType: "mp3")
+        let audioPath = Bundle.main.path(forResource: "beat", ofType: "mp3")
         //var error:NSError? = nil
         do {
-            player = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: audioPath!))
+            player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath!))
         }
         catch {
             print("Something bad happened. Try catching specific errors to narrow things down")
@@ -28,25 +28,31 @@ class FunViewController: ContentViewController {
 
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+////    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+////        return .lightContent
+////    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
-    
-    override func viewDidAppear(animated: Bool) {
+
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.becomeFirstResponder()
     }
     
-    override func canBecomeFirstResponder() -> Bool {
-        return true
-    }
+////    override func canBecomeFirstResponder() -> Bool {
+////        return true
+////    }
+    override var canBecomeFirstResponder: Bool { return true }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent!) {
-        if(event.subtype == UIEventSubtype.MotionShake) {
+////    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent!) {
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent!) {
+        if(event.subtype == UIEventSubtype.motionShake) {
             print("Shake!!!")
             player.play()
         }
     } // motionEnded()
  
+    
 
 }

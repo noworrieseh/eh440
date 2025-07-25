@@ -1,14 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   Bio.plist
-   Eh440
-
-   Created by Family iMac on 2016-07-17.
-   Copyright (c) 2016 Andrew Selkirk. All rights reserved.
--->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Eh440</string>
+		<key>role</key>
+		<string></string>
+		<key>hometown</key>
+		<string></string>
+		<key>image</key>
+		<string></string>
+		<key>facts</key>
+		<string>• Eh440 started harmonizing together in 2012. Using just their voices, this Toronto-based acappella group has wow&apos;d audiences across the USA, Canada, and Europe.
+• On the heels of their award-winning 2014 debut release Turn Me Up, they&apos;re starting to record their next full-length project to be dropped in 2016.
+• Eh440 is a mix of 5 people from 5 very different backgrounds and musical genres. Joe&apos;s been a low bass singer his entire life, Luke&apos;s an urban beatboxer, Janet identifies as a country/pop singer, Stacey&apos;s soul/pop, and Jake likes contemporary vocal / pop music.
+• Together they form &apos;an unforgettable combination of crazy beatboxing, sassy rapping, killer harmonies, and fresh, urban, RnB-influenced compositions&apos;.
+• Breathed a little fire on CBC&apos;s Dragons&apos; Den - click here to see if they got burned!
+• 6X JUNO winner Serena Ryder features on their 2014 debut album
+• Stingray Music Rising Star Award Winner and Independent Music Awards Acappella Song Winner
+</string>
+	</dict>
     <dict>
-    
+        <key>name</key>
+        <string>Tafari Anthony</string>
+        <key>role</key>
+        <string>Lead &amp; Backing Vocals</string>
+        <key>hometown</key>
+        <string></string>
+        <key>image</key>
+        <string>-tafari.png</string>
+        <key>facts</key>
+        <string>• Joined Eh440 in 2017
+• Performed with the Arts Club in Vancouver and Stage West in Calgary and Toronto
+• Provided backing vocals for solo artist and lead vocalist of The Philosopher Kings Jarvis Church
+• At the age of 6, Tafari found himself on stage opening for a major artist in Toronto, so the stage has always been a part of his life</string>
     </dict>
+    <dict>
+        <key>name</key>
+        <string>Janet Turner</string>
+        <key>role</key>
+        <string>Lead &amp; Backing Vocals</string>
+        <key>hometown</key>
+        <string>London, ON</string>
+        <key>image</key>
+        <string>-janet.png</string>
+        <key>facts</key>
+        <string>• Released a CD previous to Eh440, Tied for #1 on Toronto charts, Top 100 in Canada&quot;
+• Fave celeb she&apos;s opened for: Jay Leno
+• Has a fear of public speaking - insists that public singing and public speaking are not the same thing!
+• Has an ice cream sundae named after her at Merla Mae Ice Cream Parlour in London, ON</string>
+    </dict>
+	<dict>
+		<key>name</key>
+		<string>Luke Stapleton</string>
+		<key>role</key>
+		<string>Beatbox</string>
+		<key>hometown</key>
+		<string>Toronto, ON</string>
+		<key>image</key>
+		<string>-luke.png</string>
+		<key>facts</key>
+		<string>• AKA The Human Record
+• Performed in commercials for MUCH VIBE
+• Promotional commercial for MUCH MUSIC with Amanda Marshall
+• Toured all over, as far as China
+• Won Toronto Independent Music Award (2008, Best Live Urban category)</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Stacey Kay</string>
+		<key>role</key>
+		<string>Lead &amp; Backing Vocals</string>
+		<key>hometown</key>
+		<string>Cambridge, ON</string>
+		<key>image</key>
+		<string>-stacey.png</string>
+		<key>facts</key>
+		<string>• Through her solo career, released her self-titled EP in 2014
+• Top 30 finalist on Canadian Idol
+• Performs in various musical theatre productions, including the National Broadway Tour of Godspell (Canada/US)
+• Appeared on America&apos;s Got Talent</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Joe Oliva</string>
+		<key>role</key>
+		<string>Bass Vocals</string>
+		<key>hometown</key>
+		<string>London, ON</string>
+		<key>image</key>
+		<string>-joe.png</string>
+		<key>facts</key>
+		<string>• Released 5 CDs previous to Eh440, has 2 gold records
+• Sings in CBS movie A Holiday Romance / A Song for the Season, airing annually, starring Andy Griffith &amp; Naomi Judd
+• With Janet, performs background singing for the PBS cartoon Daniel Tiger&apos;s Neighborhood</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Mike Celia</string>
+		<key>role</key>
+		<string>Lead &amp; Backing Vocals</string>
+		<key>hometown</key>
+		<string>Mississauga, ON</string>
+		<key>image</key>
+		<string>-mike.png</string>
+		<key>facts</key>
+		<string>• Band member 2012-2015
+• Released his first EP, "Things I've Sold" in 2007
+• Has organized benefit concerts in the past for charities such as The Make A Wish Foundation
+• Played at fundraisers for Sick Kids hospital and continues his efforts today using music to create both change and awareness
+• Won Toronto Independent Music Award (2008, Best Blues category)</string>
+	</dict>
+    <dict>
+        <key>name</key>
+        <string>Jake Stern</string>
+        <key>role</key>
+        <string>Lead &amp; Backing Vocals</string>
+        <key>hometown</key>
+        <string>All over Canada</string>
+        <key>image</key>
+        <string>-jake.png</string>
+        <key>facts</key>
+        <string>• Since 18 he has been performing professionally in Theatre, Film/Television, and Vocal performance all across the US &amp; Canada
+            • Played Jesus in National Tour of Godspell (Eh440 makes him turn water into wine after rehearsals)
+            • Can sing higher than most girls
+            • Signature Dance Move: The Jakey Jake</string>
+    </dict>
+</array>
 </plist>

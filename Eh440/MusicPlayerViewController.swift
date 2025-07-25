@@ -18,7 +18,7 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        let query = MPMediaQuery.songsQuery()
+        let query = MPMediaQuery.songs()
         let artist = MPMediaPropertyPredicate(value: "Eh440", forProperty: MPMediaItemPropertyArtist)
         let album = MPMediaPropertyPredicate(value: "Turn Me Up", forProperty: MPMediaItemPropertyAlbumTitle)
         query.addFilterPredicate(artist)
@@ -37,16 +37,16 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
         
        */
         
-        self.tableView = UITableView(frame: self.view.frame, style: .Plain)
+        self.tableView = UITableView(frame: self.view.frame, style: .plain)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         //self.tableView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorStyle = .none
         //        self.tableView.backgroundColor = UIColor.lightGrayColor()
         self.tableView.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
         //        self.tableView.rowHeight = UITableViewAutomaticDimension
         //        self.tableView.estimatedRowHeight = 88
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(self.tableView)
         
         self.view.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
@@ -59,8 +59,7 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
     func contentSizeDidChange(size: String) {
         self.tableView.reloadData()
     }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("Get Count \(songs.count)")
         return songs.count
     }
@@ -68,22 +67,23 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
 //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 //        return 80.0
 //    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+////    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         print("Get cell")
     //    var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell!
         
-        cell.textLabel!.text = songs[indexPath.row].title
+        cell?.textLabel!.text = songs[indexPath.row].title
         
         print("Done cell")
 
         
-        return cell
+        return cell!
     }
     
     
-    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         /*
          print("Tapped accessory")
          let push = MapViewController()
@@ -99,14 +99,14 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
     
     var q : MPMediaItemCollection!
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You selected cell #\(indexPath.row)!")
         print("\(songs[indexPath.row].title)")
 
-        let player = MPMusicPlayerController.applicationMusicPlayer()
+        let player = MPMusicPlayerController.applicationMusicPlayer
 
-        player.repeatMode = .None
-        player.shuffleMode = .Off
+        player.repeatMode = .none
+        player.shuffleMode = .off
         player.stop()
         
         var items:[MPMediaItem] = []
@@ -114,7 +114,7 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
             items.append(item)
         }
 
-        let asset = songs[indexPath.row].valueForProperty(MPMediaItemPropertyAssetURL)
+        let asset = songs[indexPath.row].value(forProperty: MPMediaItemPropertyAssetURL)
         print("Asset: \(asset)")
    
         /*
@@ -175,8 +175,8 @@ class MusicPlayerViewController: ContentViewController, UITableViewDelegate, UIT
     
     func changed(n:NSNotification) {
 
-        let player = MPMusicPlayerController.applicationMusicPlayer()
-        guard n.object === player else { return } // just playing safe
+        let player = MPMusicPlayerController.applicationMusicPlayer
+        ////guard n.object === player else { return } // just playing safe
         guard let title = player.nowPlayingItem?.title else {return}
         let ix = player.indexOfNowPlayingItem
         guard ix != NSNotFound else {return}

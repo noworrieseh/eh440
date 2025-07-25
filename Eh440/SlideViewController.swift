@@ -26,34 +26,35 @@ class SlideViewController: UIViewController {
         super.viewDidLoad()
         
         // Make NavBar invisible
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
         
         // Add NavButton
-        let leftDrawerButton = DrawerBarButtonItem(target: self, action: #selector(HomeViewController.leftDrawerButtonPress(_:)))
-        self.navigationItem.setLeftBarButtonItem(leftDrawerButton, animated: true)
-        
+//        let leftDrawerButton = DrawerBarButtonItem(target: self, action: #selector(HomeViewController.leftDrawerButtonPress(_:)))
+        let leftDrawerButton = DrawerBarButtonItem(target: self, action: #selector(HomeViewController.leftDrawerButtonPress))
+        self.navigationItem.setLeftBarButton(leftDrawerButton, animated: true)
+
         // Setup Rotating images
         let image: UIImage = UIImage(named: "launch.png")!
         bgImage = UIImageView(image: image)
-        bgImage!.frame = CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)
-        bgImage?.contentMode = .ScaleAspectFill
-        bgImage?.autoresizingMask = (.FlexibleBottomMargin)
+        bgImage!.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        bgImage?.contentMode = .scaleAspectFill
+        bgImage?.autoresizingMask = (.flexibleBottomMargin)
         self.view.addSubview(bgImage!)
         
         updateTime()
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(SlideViewController.updateTime),
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(SlideViewController.updateTime),
                                                userInfo: nil, repeats: true)
         
     }
     func leftDrawerButtonPress(sender: AnyObject?) {
-        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
+        self.evo_drawerController?.toggleDrawerSide(.left, animated: true, completion: nil)
     }
     
-    func updateTime() {
+    @objc func updateTime() {
         bgImage?.image = stripeImages[imageIndex]
-        //        print("updateTime \(imageIndex)")
+        //        print("updateTime \(image@objc Index)")
         imageIndex += 1
         if (imageIndex > stripeImages.count - 1) {
             imageIndex = 0

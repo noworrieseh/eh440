@@ -29,25 +29,25 @@ class BlogViewController: ContentViewController, UITableViewDelegate, UITableVie
         
         self.title = "Blog"
         
-        self.tableView = UITableView(frame: self.view.bounds, style: .Plain)
+        self.tableView = UITableView(frame: self.view.bounds, style: .plain)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
-        self.tableView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
-        self.tableView.separatorStyle = .None
+        self.tableView.autoresizingMask = [ .flexibleWidth, .flexibleHeight ]
+        self.tableView.separatorStyle = .none
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 88
         self.tableView.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
-        self.tableView.registerClass(BlogTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.register(BlogTableViewCell.self, forCellReuseIdentifier: "cell")
         
         //self.view.backgroundColor = UIColor.whiteColor()
         self.view.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
         
-        if let detailData = DataModelManager.requestJSON(.GET,
+        if let detailData = DataModelManager.requestJSON(
                 URLString: "http://www.eh440.com/blog/?format=json-pretty") {
             
             blog.removeAll()
-            var data:JSON = JSON(data: detailData)
+            var data:JSON = try! JSON(data: detailData)
             let json = data["items"]
             print("Count: \(json.count)")
             for index in 0...(json.count - 1) {
@@ -56,7 +56,8 @@ class BlogViewController: ContentViewController, UITableViewDelegate, UITableVie
                 
                 let item = BlogDetails()
                 item.title = json[index]["title"].string!
-                item.title = item.title.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+//                item.title = item.title.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+                item.title = item.title.replacingOccurrences(of: "&amp;", with: "&")
                 item.url = "http://eh440.com" + json[index]["fullUrl"].string!
                 item.body = json[index]["body"].string!
                 if let epoch = json[index]["publishOn"].int {
@@ -80,31 +81,31 @@ class BlogViewController: ContentViewController, UITableViewDelegate, UITableVie
         self.tableView.reloadData()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return blog.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = BlogTableViewCell(style: .Subtitle, reuseIdentifier: "cell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = BlogTableViewCell(style: .subtitle, reuseIdentifier: "cell")
         print("Index: \(indexPath.row)")
         
         let item = blog[indexPath.row]
         cell.customView.blogTitle.text = item.title
-        cell.customView.blogDate.setDate(item.date)
-        cell.selectionStyle = .None
+        cell.customView.blogDate.setDate(date: item.date)
+        cell.selectionStyle = .none
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let item = blog[indexPath.row]
         print("URL: \(item.url)")
@@ -128,7 +129,7 @@ class BlogTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         customView.translatesAutoresizingMaskIntoConstraints = false
-        customView.layer.borderColor = UIColor.blackColor().CGColor
+        customView.layer.borderColor = UIColor.black.cgColor
         customView.layer.borderWidth = 1.0
         
         //  contentView.backgroundColor = UIColor.lightGrayColor()
@@ -138,8 +139,8 @@ class BlogTableViewCell: UITableViewCell {
             "inner" : customView
         ]
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[inner]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-2-[inner]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[inner]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[inner]-|", options: [], metrics: nil, views: viewsDict))
         
     }
     
@@ -163,10 +164,10 @@ class BlogView: UIView {
         
         let shadowPath = UIBezierPath(rect: bounds)
         layer.masksToBounds = false
-        layer.shadowColor = UIColor.blackColor().CGColor
-        layer.shadowOffset = CGSizeMake(0.0, 5.0)
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 5)
         layer.shadowOpacity = 0.5
-        layer.shadowPath = shadowPath.CGPath
+        layer.shadowPath = shadowPath.cgPath
     }
     
     override init (frame : CGRect) {
@@ -177,22 +178,22 @@ class BlogView: UIView {
         
         blogTitle.translatesAutoresizingMaskIntoConstraints = false
         blogDate.translatesAutoresizingMaskIntoConstraints = false
-        blogTitle.font = UIFont.systemFontOfSize(15)
+        blogTitle.font = UIFont.systemFont(ofSize: 15)
         
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         
         self.addSubview(blogTitle)
         self.addSubview(blogDate)
         
-        let viewsDict = [
+        let viewsDict : [String:Any] = [
             "date" : blogDate,
             "blog" : blogTitle
         ]
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-4-[date]-[blog(>=20)]-4-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-4-[date]-[blog(>=20)]-4-|", options: [], metrics: nil, views: viewsDict))
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[date]->=0-|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[blog]-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[date]->=0-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[blog]-|", options: [], metrics: nil, views: viewsDict))
         
     }
     
@@ -223,63 +224,63 @@ class DateYearView: UIView {
         
         dayofWeek.text = "SUN"
         dayofWeek.font = UIFont(name: "HelveticaNeue", size: 8)
-        dayofWeek.backgroundColor = UIColor.redColor()
-        dayofWeek.textColor = UIColor.whiteColor()
-        dayofWeek.textAlignment = .Center
+        dayofWeek.backgroundColor = UIColor.red
+        dayofWeek.textColor = UIColor.white
+        dayofWeek.textAlignment = .center
         
         day.text = "4"
         day.font = UIFont(name: "HelveticaNeue", size: 20)
         day.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.0)
-        day.textAlignment = .Center
+        day.textAlignment = .center
         
         month.text = "SEP"
         month.font = UIFont(name: "HelveticaNeue", size: 8)
         month.backgroundColor = UIColor(red: 230.0/255, green: 230.0/255, blue: 230.0/255, alpha: 1.9)
-        month.textAlignment = .Center
+        month.textAlignment = .center
         
         year.text = "YEAR"
         year.centerText = true
         //year.backgroundColor = UIColor(red: 176.0/255, green: 23.0/255, blue: 31.0/255, alpha: 1.0)
-        year.backgroundColor = UIColor.lightGrayColor()
-        year.font = UIFont.systemFontOfSize(10)
+        year.backgroundColor = UIColor.lightGray
+        year.font = UIFont.systemFont(ofSize: 10)
 
         self.addSubview(dayofWeek)
         self.addSubview(day)
         self.addSubview(month)
         self.addSubview(year)
         
-        let viewsDict = [
+        let viewsDict : [String:Any] = [
             "year" : year,
             "dayofweek" : dayofWeek,
             "day" : day,
             "month" : month
         ]
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[year(11)][dayofweek(>=40)]|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[year(11)][day(>=40)]|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[year(11)][month(>=40)]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[year(11)][dayofweek(>=40)]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[year(11)][day(>=40)]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[year(11)][month(>=40)]|", options: [], metrics: nil, views: viewsDict))
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[dayofweek][day][month]-|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[year]-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[dayofweek][day][month]-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[year]-|", options: [], metrics: nil, views: viewsDict))
         
     }
     
     func setDate(date: NSDate) {
         
-        let calendar = NSCalendar.currentCalendar()
-        let formatter = NSDateFormatter()
+        let calendar = NSCalendar.current
+        let formatter = DateFormatter()
         
-        day.text = String(calendar.component(.Day, fromDate: date))
-        year.text = String(calendar.component(.Year, fromDate: date))
+        day.text = String(calendar.component(.day, from: date as Date))
+        year.text = String(calendar.component(.year, from: date as Date))
         
         formatter.dateFormat = "MMM"
-        month.text = formatter.stringFromDate(date).uppercaseString
+        month.text = formatter.string(from: date as Date).uppercased()
         
         formatter.dateFormat = "EEEE"
-        let formattedWeekDay = formatter.stringFromDate(date)
-        let index = formattedWeekDay.startIndex.advancedBy(3)
-        
-        dayofWeek.text = formattedWeekDay.substringToIndex(index).uppercaseString
+        let formattedWeekDay = formatter.string(from: date as Date)
+////        let index = formattedWeekDay.startIndex.advancedBy(3)
+////        dayofWeek.text = formattedWeekDay.substringToIndex(index).uppercaseString
+        dayofWeek.text = formattedWeekDay.substringToIndex(index: 3)
         
     }
     
